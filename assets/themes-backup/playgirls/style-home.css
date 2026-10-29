@@ -1,0 +1,347 @@
+/* ================ reset ================ */
+* {
+    margin: 0;
+    padding: 0;
+    gap: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    border: none;
+    background: none;
+}
+
+img, video {
+    outline: none;
+    -webkit-user-drag: none;
+}
+
+
+
+
+/* ================ global ================ */
+h1, h2, h3 {
+    color: white;
+    font-family: system-ui;
+}
+
+li, a, p {
+    color: white;
+    font-family: system-ui;
+    font-weight: 500;
+}
+
+button {
+    cursor: pointer;
+}
+
+img, video {
+    display: block;
+    max-width: 100%;
+    background-color: black;
+}
+
+
+
+
+/* ============================================ */
+/* ================ background ================ */
+/* ============================================ */
+html {
+    scroll-behavior: smooth;
+    background-color: black;
+}
+
+body {
+    min-height: 100vh;
+}
+
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(45deg, hsl(240, 100%, 4%), hsl(240, 100%, 6%));
+}
+
+
+
+
+/* ======================================== */
+/* ================ header ================ */
+/* ======================================== */
+header {
+    height: 75px;
+    /* background-color: mediumslateblue; */
+    background-color: royalblue;
+    background: linear-gradient(hsl(225, 73%, 57%), hsl(225, 73%, 40%));
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header h1 {
+    /* text-align: center; */
+    margin-top: -5px;
+    text-shadow: 0 0 10px hsl(0, 0%, 0%, 50%);
+}
+
+
+/* ================ nav ================ */
+nav {
+    position: sticky;
+    top: -1px;
+    z-index: 2;
+    background-color: hsl(0, 0%, 11%);
+    box-shadow: 0 6px 6px hsl(0, 0%, 0%, 20%);
+}
+
+nav ul {
+    overflow: hidden;
+    
+    margin: auto;
+    max-width: 1080px;
+    padding-left: 8px;
+    
+    height: 28px;
+    display: flex;
+    align-items: center;
+}
+
+nav a {
+    white-space: nowrap;
+    margin-right: 12px;
+}
+
+nav a:hover {
+    color: gold;
+}
+
+
+/* ================ Carrousel ================ */
+.carrousel {
+    position: fixed;
+    z-index: 1;
+    top: 50%;
+
+    font-weight: bolder;
+    border-radius: 15px;
+    width:  30px;
+    height: 30px;
+
+    color: white;
+    background-color: hsl(225, 66%, 33%);
+    box-shadow: rgba(0,0,0, 0.50) 0 0 12px;
+}
+
+.carrousel:hover {
+    background-color: hsl(225, 66%, 44%);
+}
+
+.carrousel#prev { left:  10px; }
+.carrousel#next { right: 10px; }
+
+
+
+/* ====================================== */
+/* ================ main ================ */
+/* ====================================== */
+main {
+    overflow: hidden;
+
+    margin: auto;
+    max-width: 1080px;
+    min-height: 100vh;
+
+    padding-top:    30px;
+    padding-left:    8px;
+    padding-right:   8px;
+    padding-bottom: 45px;
+}
+
+
+
+/* ================ sections ================ */
+section {
+    border-radius: 6px;
+    min-height:  200px;
+    
+    /* background-color: darkblue; */
+    background: linear-gradient(45deg, hsl(0, 0%, 100%, 6%), hsl(0, 0%, 100%, 8%));
+    box-shadow: 0 0 15px hsl(0, 0%, 0%, 10%);
+}
+
+section h2 {
+    padding-top:     8px;
+    padding-left:   15px;
+    padding-bottom:  8px;
+}
+
+
+
+/* ================ containers ================ */
+section div {
+    padding-top:    10px;
+    padding-left:    8px;
+    padding-right:   8px;
+    padding-bottom: 10px;
+}
+
+
+
+/* ========================================= */
+/* ================ customs ================ */
+/* ========================================= */
+
+/* ================ banner ================ */
+#ban {
+    margin-top:  -5px;
+    margin-bottom:  35px;
+}
+
+#ban h2 {
+    padding-top:    5px;
+    padding-bottom: 0px;
+}
+
+#ban div {
+    padding-top:    10px;
+    padding-bottom: 15px;
+}
+
+
+@media (min-width: 600px) { #ban img { aspect-ratio: 29/9; } }
+@media (max-width: 600px) { #ban img { aspect-ratio: 24/9; } }
+#ban img {
+    object-fit: cover;
+    object-position: center 78%;
+    border-radius: 6px;
+    transition: 90ms;
+}
+
+#ban img:hover {
+    filter: brightness(1.07);
+    box-shadow: 0 0 10px hsl(0, 0%, 66%, 40%);
+}
+
+
+
+/* ================ posts ================ */
+#posts {
+    /* margin-top: 50px; */
+}
+
+#posts div {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    row-gap:    10px;
+    column-gap: 10px;
+}
+
+#posts video {
+    object-fit: cover;
+    aspect-ratio: 16/9;
+    width: 100%;
+    border-radius: 4px;
+    background: linear-gradient(45deg, hsl(0, 0%, 3%), hsl(0, 0%, 11%));
+    box-shadow: 0 0 8px hsl(0, 0%, 0%, 35%);
+    transition: 150ms;
+}
+
+#posts video:hover {
+    box-shadow: 0 0 8px hsl(0, 0%, 50%, 50%);
+}
+
+
+
+
+/* ================ Web Pages ================ */
+#webpages {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    
+    margin-top: 35px;
+    column-gap:  5px;
+    row-gap:    10px;
+}
+
+#webpages button {
+    width:          40px;
+    height:         40px;
+    border-radius:   5px;
+    background-color: royalblue;
+    background: linear-gradient(hsl(225, 73%, 55%), hsl(225, 65%, 35%));
+}
+
+#webpages button:hover {
+    background: linear-gradient(hsl(225, 73%, 60%), hsl(225, 68%, 40%));
+    box-shadow: 0 0 10px hsl(0, 0%, 100%, 20%);
+}
+
+#webpages h3 {
+    margin-top: -2px;
+}
+
+
+
+
+/* ======================================== */
+/* ================ footer ================ */
+/* ======================================== */
+
+/* ================ Navigation ================ */
+#gohead {
+    position: fixed;
+    z-index: 1;
+    bottom: 25px;
+    right:  25px;
+
+    border-radius: 15px;
+    width:  30px;
+    height: 30px;
+    background-color: hsl(225, 66%, 33%);
+    box-shadow: rgba(0,0,0, 0.50) 0 0 12px;
+}
+
+#gohead:hover {
+    background-color: hsl(225, 66%, 44%);
+}
+
+#gohead p {
+    color: white;
+    font-size: 15px;
+    margin-top: -5px;
+}
+
+
+
+/* ================ Footer ================ */
+footer {
+    height: 95px;
+    background-color: royalblue;
+    background: linear-gradient(hsl(225, 73%, 57%), hsl(225, 73%, 40%));
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-shadow: 0 0 15px hsl(0, 0%, 0%, 50%);
+}
+
+footer h1 {
+    /* text-align: center; */
+    margin-top: -5px;
+    text-shadow: 0 0 10px hsl(0, 0%, 0%, 50%);
+}

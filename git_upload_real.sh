@@ -29,11 +29,6 @@ prep_git() {
   g remote remove origin 2>/dev/null || true
   g remote add origin "https://$GIT_USER:$GIT_TOKEN@$HOST/$GIT_USER/$NAME.git"
 }
-# pasta temporária só com o que está versionado no repo da conta (nunca publica yml/chaves)
-stage_tracked() {
-  STAGE=$(mktemp -d); trap 'rm -rf "$STAGE"; pause' EXIT
-  ( cd "$DIR" && g ls-files -z | xargs -0 -I{} cp --parents "{}" "$STAGE" )
-}
 
 # Commit + push em lotes (upload_chunks) usando o .git_repoN da conta.
 prep_git

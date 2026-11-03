@@ -29,17 +29,18 @@ prep_git() {
   g remote remove origin 2>/dev/null || true
   g remote add origin "https://$GIT_USER:$GIT_TOKEN@$HOST/$GIT_USER/$NAME.git"
 }
-# pasta temporária só com o que está versionado no repo da conta (nunca publica yml/chaves)
-stage_tracked() {
-  STAGE=$(mktemp -d); trap 'rm -rf "$STAGE" "$DIR/.wrangler"; pause' EXIT
-  ( cd "$DIR" && g ls-files -z | xargs -0 -I{} cp --parents "{}" "$STAGE" )
-}
-
-# Cria o projeto Pages <tema>-<contador> e faz o 1º deploy do que está versionado no .git_repoN.
-need curl; need npx; prep_git; stage_tracked
-curl -fsS -X POST "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/pages/projects" \
-  -H "Authorization: Bearer $CF_TOKEN" -H "Content-Type: application/json" \
-  --data "{\"name\":\"$NAME\",\"production_branch\":\"main\"}" >/dev/null && echo "projeto criado: $NAME" || echo "projeto já existe (ou erro): $NAME"
-CLOUDFLARE_API_TOKEN="$CF_TOKEN" CLOUDFLARE_ACCOUNT_ID="$CF_ACCOUNT" \
-  npx -y wrangler pages deploy "$STAGE" --project-name "$NAME" --branch main
-echo "url: https://$NAME.pages.dev"
+# Cria o projeto Pages <tema>-<contador> já ligado ao repo do GitHub (branch main). O deploy sai sempre do Git.
+need curl; prep_git
+R=$(curl -sS -X POST "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/pages/projects" \
+  -H "Authorization: Bearer $CF_TOKEN" -H "Content-Type: application/json" --data "{
+  \"name\": \"$NAME\", \"production_branch\": \"main\",
+  \"source\": {\"type\": \"github\", \"config\": {
+    \"owner\": \"$GIT_USER\", \"repo_name\": \"$NAME\", \"production_branch\": \"main\",
+    \"deployments_enabled\": true, \"production_deployments_enabled\": true,
+    \"pr_comments_enabled\": false, \"preview_deployment_setting\": \"none\" }}}")
+if echo "$R" | grep -q '"success": *true'; then
+  echo "projeto criado e conectado ao Git: $NAME (o 1º deploy começa sozinho)"
+  echo "url: https://$NAME.pages.dev"
+else
+  echo "erro (ou projeto já existe):"; echo "$R"; exit 1
+fi
